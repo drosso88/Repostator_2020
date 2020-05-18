@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,8 +33,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         ArrayList<String> listadoRepostajes = new ArrayList<String>();
         ListView listaVista; //vista uw muestra filas
@@ -48,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
         String mes = "";
         String year = "";
         double costeTotal = 0;
-        for(int i = 1 ; i <= size; i++){
+        for (int i = 1; i <= size; i++) {
             precio = sp.getString("precio_" + i, "0");
             kilometros = sp.getString("kilometros_" + i, "0");
             litros = sp.getString("litros_" + i, "0");
             costeTotal = (Double.valueOf(precio) * Double.valueOf(litros));
-            dia = String.valueOf( sp.getInt("dia_" + i, 0) );
-            mes = String.valueOf( sp.getInt("mes_" + i, 0) );
-            year = String.valueOf( sp.getInt("anyo_" + i, 0) );
+            dia = String.valueOf(sp.getInt("dia_" + i, 0));
+            mes = String.valueOf(sp.getInt("mes_" + i, 0));
+            year = String.valueOf(sp.getInt("anyo_" + i, 0));
             listadoRepostajes.add(kilometros + " km " + litros + " L " + precio + " €/L coste: " + String.format("%.2f",
                     costeTotal) + " fecha: " + dia + "-" + mes + "-" + year);
         }
@@ -68,5 +70,22 @@ public class MainActivity extends AppCompatActivity {
                 listadoRepostajes
         );
         listaVista.setAdapter(arrayAdapter);
+
+        listaVista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            final Intent ventana = new Intent(MainActivity.this, ActualizaDatos.class);
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ventana.putExtra("posicion", position);
+               startActivity(ventana);
+            }
+        });
     }
 }
+
+
+
+
+
+
+
