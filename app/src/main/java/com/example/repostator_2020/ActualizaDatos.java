@@ -1,7 +1,6 @@
 package com.example.repostator_2020;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.content.Context;
 import android.content.SharedPreferences;
